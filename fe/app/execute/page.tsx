@@ -55,18 +55,12 @@ export default function ExecutePage() {
     selectedAccount as `0x${string}` | undefined
   );
 
-  const feedInfo = accountData?.ruleFeedName
-    ? Object.values(AVAILABLE_FEEDS).find(
-        (f) => f.name === accountData.ruleFeedName
-      )
-    : null;
-
   const { data: currentPrice, refetch: refetchPrice } = useGetCurrentPrice(
-    feedInfo?.name || ""
+    ""
   );
 
   const { data: currentSentiment, refetch: refetchSentiment } =
-    useGetCurrentSentiment(feedInfo?.symbol || "");
+    useGetCurrentSentiment(selectedAccount as `0x${string}` | undefined);
 
   const { data: conditionsMet, refetch: refetchConditions } =
     useCheckConditions(selectedAccount as `0x${string}` | undefined);
@@ -127,7 +121,7 @@ export default function ExecutePage() {
     );
   }
 
-  if (!accountData?.ruleFeedName) {
+  if (!accountData?.ruleAssetSymbol || !accountData?.ruleIsActive) {
     return (
       <div className="min-h-screen bg-[#F5F7FA]">
         <Navbar />
@@ -162,6 +156,11 @@ export default function ExecutePage() {
     SENTIMENT_OPTIONS.find((s) => s.value === accountData.ruleSentimentCondition)
       ?.label || "Any";
 
+  // Find feed info from symbol
+  const feedInfo = Object.values(AVAILABLE_FEEDS).find(
+    feed => feed.symbol === accountData.ruleAssetSymbol
+  );
+
   return (
     <div className="min-h-screen bg-[#F5F7FA]">
       <Navbar />
@@ -184,7 +183,7 @@ export default function ExecutePage() {
             <div className="flex items-center justify-between">
               <span className="text-gray-600">Price Feed:</span>
               <Badge className="rounded-lg border-2 border-black bg-white text-black">
-                {feedInfo?.displayName || accountData.ruleFeedName}
+                {feedInfo?.displayName || accountData.ruleAssetSymbol} ({feedInfo?.name || accountData.ruleAssetSymbol})
               </Badge>
             </div>
             <div className="flex items-center justify-between">

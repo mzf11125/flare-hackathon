@@ -24,22 +24,29 @@ import Link from "next/link";
 
 export default function DashboardPage() {
   const { address, isConnected } = useAccount();
-  const { data: userAccounts, isLoading: accountsLoading } = useGetUserAccounts(address);
+  const { data: userAccounts, isLoading: accountsLoading, error: accountsError } = useGetUserAccounts(address);
   const { createAccount, isPending, isSuccess } = useCreateAccount();
   const [selectedAccount, setSelectedAccount] = useState<string>("");
 
-  // Use demo account if no accounts exist
+  // Set first user account as selected
   useEffect(() => {
     if (!selectedAccount && userAccounts && userAccounts.length > 0) {
       setSelectedAccount(userAccounts[0] as string);
-    } else if (!selectedAccount && !accountsLoading) {
-      setSelectedAccount(CONTRACTS.demoAccount);
     }
-  }, [userAccounts, accountsLoading, selectedAccount]);
+  }, [userAccounts, selectedAccount]);
 
   const accountData = useSmartAccountData(
     selectedAccount as `0x${string}` | undefined
   );
+
+  // Show error toast if RPC fails
+  useEffect(() => {
+    if (accountsError) {
+      toast.error("Network Error", {
+        description: "Unable to connect to Flare network. Please check your connection.",
+      });
+    }
+  }, [accountsError]);
 
   // Handle account creation success
   useEffect(() => {
@@ -65,6 +72,30 @@ export default function DashboardPage() {
             <CardContent>
               <div className="flex justify-center">
                 <Rocket className="h-24 w-24 text-[#00C7B7]" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // Show loading state while fetching accounts
+  if (accountsLoading) {
+    return (
+      <div className="min-h-screen bg-[#F5F7FA]">
+        <Navbar />
+        <div className="container mx-auto px-4 py-20">
+          <Card className="mx-auto max-w-md rounded-2xl border-4 border-black">
+            <CardHeader>
+              <CardTitle className="text-2xl">Loading...</CardTitle>
+              <CardDescription>
+                Fetching your InfoPilot accounts
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex justify-center">
+                <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#00C7B7] border-t-transparent" />
               </div>
             </CardContent>
           </Card>

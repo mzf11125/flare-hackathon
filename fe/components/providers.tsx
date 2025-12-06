@@ -15,8 +15,15 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      retry: 1,
+      retry: 3,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
       staleTime: 30000, // 30 seconds
+      gcTime: 60000, // 1 minute
+      networkMode: 'offlineFirst',
+    },
+    mutations: {
+      retry: 1,
+      networkMode: 'offlineFirst',
     },
   },
 });

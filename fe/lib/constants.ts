@@ -10,13 +10,13 @@ import { type Address } from "viem";
 // ========================================
 
 export const CONTRACTS = {
-  factory: "0x72c57B68c5fd7325D0264F9689F4bbF8D4469385" as Address,
-  demoAccount: "0xb44b2795C3ab0157cE493EA0D12ac384a0b15F65" as Address,
-  sentimentOracle: "0xe5F14d35aDA94b11E56E588de76E6704c5D13178" as Address,
-  dex: "0x03b5560f67Ce8b698C3CDbC043C8e1f89197731b" as Address,
-  wflr: "0x35984E84E8cd592F9e162e58E559A46cecBE13DA" as Address,
-  usdc: "0x64E2Bce63A968Bfdc52372B869831212B5505bb5" as Address,
-  usdt: "0x18Dc78cFbBEbBE911dB1e22Cb12291Ae7Ace92Ba" as Address,
+  factory: "0x0563229aEEBfAeDdAa5c1a94d872f568f442DaCe" as Address,
+  demoAccount: "0x284272b1936A4109e4D517500f2b9b486c9970d3" as Address,
+  sentimentOracle: "0x97662c258Bc4c84d583D761aE882E543C2B50262" as Address,
+  dex: "0x580fd983BDa227d4d21930aEE759d4677A3acA2f" as Address,
+  wflr: "0x5550307DC0F420ed91fD6886be42140Df4300742" as Address,
+  usdc: "0xBbf7BcAFF52F8cDD23845e954189111781d98c13" as Address,
+  usdt: "0x1434a5EEf8C5F66B6eba880BC687b621A54d4664" as Address,
   ftsoV2: "0x7BDE3Df0624114eDB3A67dFe6753e62f4e7c1d20" as Address,
   feedConverter: "0xafEa60cabb2daB413D17b85Db82cCf6EB06a0F66" as Address,
 } as const;

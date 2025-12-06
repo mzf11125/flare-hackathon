@@ -24,6 +24,8 @@ export function useGetUserAccounts(userAddress?: Address) {
     args: userAddress ? [userAddress] : undefined,
     query: {
       enabled: !!userAddress,
+      retry: 3,
+      staleTime: 10000,
     },
   });
 }
@@ -83,6 +85,8 @@ export function useGetCurrentRule(accountAddress?: Address) {
     query: {
       enabled: !!accountAddress,
       refetchInterval: 5000, // Refresh every 5 seconds
+      retry: 3,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
     },
   });
 }
@@ -205,6 +209,7 @@ export function useGetCurrentSentiment(symbol: string | Address | undefined) {
     query: {
       enabled: !!(symbol && symbol.startsWith('0x')),
       refetchInterval: 5000, // Refresh every 5 seconds
+      retry: 2,
     },
   });
 }
@@ -381,24 +386,25 @@ export function useSmartAccountData(accountAddress?: Address) {
   const usdtBalance = useGetTokenBalance(accountAddress, CONTRACTS.usdt);
   
   // Extract rule data from tuple
+  // ABI order: [priceFeedId, assetSymbol, priceThreshold, isPriceBelow, sentimentCondition, swapPercentage, tokenIn, tokenOut, active, createdAt]
   const ruleData = rule.data as readonly [
-    `0x${string}`,
-    string,
-    bigint,
-    boolean,
-    number,
-    bigint,
-    `0x${string}`,
-    `0x${string}`,
-    boolean,
-    bigint
+    `0x${string}`,  // priceFeedId (bytes21)
+    string,         // assetSymbol
+    bigint,         // priceThreshold
+    boolean,        // isPriceBelow
+    number,         // sentimentCondition
+    bigint,         // swapPercentage
+    `0x${string}`,  // tokenIn
+    `0x${string}`,  // tokenOut
+    boolean,        // active
+    bigint          // createdAt
   ] | undefined;
   
   return {
     rule: rule.data,
     accountData: ruleData ? {
-      ruleFeedName: ruleData[1],
-      ruleAssetSymbol: ruleData[0],
+      rulePriceFeedId: ruleData[0],
+      ruleAssetSymbol: ruleData[1],
       rulePriceThreshold: ruleData[2],
       ruleIsPriceBelow: ruleData[3],
       ruleSentimentCondition: ruleData[4],
@@ -406,6 +412,7 @@ export function useSmartAccountData(accountAddress?: Address) {
       ruleTokenIn: ruleData[6],
       ruleTokenOut: ruleData[7],
       ruleIsActive: ruleData[8],
+      ruleCreatedAt: ruleData[9],
     } : undefined,
     price: price.data,
     sentiment: sentiment.data,

@@ -53,8 +53,6 @@ export default function RulesPage() {
   useEffect(() => {
     if (!selectedAccount && userAccounts && userAccounts.length > 0) {
       setSelectedAccount(userAccounts[0] as string);
-    } else if (!selectedAccount) {
-      setSelectedAccount(CONTRACTS.demoAccount);
     }
   }, [userAccounts, selectedAccount]);
 
@@ -118,6 +116,34 @@ export default function RulesPage() {
     );
   }
 
+  // Require users to have at least one account
+  if (userAccounts && userAccounts.length === 0) {
+    return (
+      <div className="min-h-screen bg-[#F5F7FA]">
+        <Navbar />
+        <div className="container mx-auto px-4 py-20">
+          <Card className="mx-auto max-w-md rounded-2xl border-4 border-black">
+            <CardHeader>
+              <CardTitle>Create an Account First</CardTitle>
+              <CardDescription>
+                You need to create an InfoPilot Smart Account before setting up trading rules.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button
+                onClick={() => router.push('/dashboard')}
+                className="w-full gap-2 rounded-xl border-4 border-black bg-[#00C7B7] py-6 text-lg font-bold text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+              >
+                Go to Dashboard
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#F5F7FA]">
       <Navbar />
@@ -129,6 +155,30 @@ export default function RulesPage() {
             Set conditions for automated portfolio rebalancing
           </p>
         </div>
+
+        {/* Account Selector */}
+        {userAccounts && userAccounts.length > 1 && (
+          <Card className="mb-6 rounded-2xl border-4 border-black">
+            <CardHeader>
+              <CardTitle>Select Account</CardTitle>
+              <CardDescription>Choose which smart account to configure</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Select value={selectedAccount} onValueChange={setSelectedAccount}>
+                <SelectTrigger className="rounded-xl border-4 border-black">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="rounded-xl border-4 border-black">
+                  {userAccounts.map((account, index) => (
+                    <SelectItem key={account} value={account as string}>
+                      Account #{index + 1} — {account.slice(0, 6)}...{account.slice(-4)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Quick Presets */}
         <Card className="mb-6 rounded-2xl border-4 border-black">

@@ -348,8 +348,10 @@ contract InfoPilotSmartAccount {
 
     /**
      * @notice Transfer ownership
+     * @dev Called by factory during account creation to transfer ownership to user
      */
-    function transferOwnership(address newOwner) external onlyOwner {
+    function transferOwnership(address newOwner) external {
+        require(msg.sender == owner, "Only current owner can transfer");
         require(newOwner != address(0), "Invalid address");
         owner = newOwner;
     }

@@ -18,11 +18,16 @@ export const coston2 = defineChain({
   },
   rpcUrls: {
     default: {
-      http: ["https://coston2.enosys.global/ext/C/rpc"],
-      webSocket: ["wss://coston2.enosys.global/ext/C/ws"],
+      http: [
+        "https://coston2-api.flare.network/ext/C/rpc",
+        "https://coston2.enosys.global/ext/C/rpc"
+      ],
     },
     public: {
-      http: ["https://coston2-api.flare.network/ext/C/rpc"],
+      http: [
+        "https://coston2-api.flare.network/ext/C/rpc",
+        "https://coston2.enosys.global/ext/C/rpc"
+      ],
     },
   },
   blockExplorers: {
@@ -36,7 +41,7 @@ export const coston2 = defineChain({
 
 export const wagmiConfig = getDefaultConfig({
   appName: "InfoPilot - Autonomous Information Finance Agent",
-  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "YOUR_PROJECT_ID",
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "f5c5c0e9a6b4f5c5c0e9a6b4f5c5c0e9",
   chains: [coston2],
   ssr: true, // Enable SSR for Next.js
 });

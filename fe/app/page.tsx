@@ -1,3 +1,4 @@
+import { Navbar } from "@/components/Navbar"
 import { HeroSection } from "@/components/hero-section"
 import { WhatIsSection } from "@/components/what-is-section"
 import { UspSection } from "@/components/usp-section"
@@ -12,6 +13,7 @@ import { Footer } from "@/components/footer"
 export default function HomePage() {
   return (
     <main className="min-h-screen">
+      <Navbar />
       <HeroSection />
       <WhatIsSection />
       <UspSection />

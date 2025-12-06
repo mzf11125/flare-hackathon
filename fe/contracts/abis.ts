@@ -1,0 +1,330 @@
+/**
+ * Contract ABIs for InfoPilot
+ * Generated from Foundry build artifacts
+ */
+
+export const infoPilotFactoryAbi = [
+  {
+    type: "constructor",
+    inputs: [
+      { name: "_ftsoV2", type: "address", internalType: "address" },
+      { name: "_feedConverter", type: "address", internalType: "address" },
+      { name: "_sentimentOracle", type: "address", internalType: "address" },
+      { name: "_dexRouter", type: "address", internalType: "address" },
+    ],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "createAccount",
+    inputs: [],
+    outputs: [{ name: "account", type: "address", internalType: "address" }],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "createMultipleAccounts",
+    inputs: [{ name: "count", type: "uint256", internalType: "uint256" }],
+    outputs: [{ name: "accounts", type: "address[]", internalType: "address[]" }],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "getUserAccounts",
+    inputs: [{ name: "user", type: "address", internalType: "address" }],
+    outputs: [{ name: "", type: "address[]", internalType: "address[]" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "getUserAccountCount",
+    inputs: [{ name: "user", type: "address", internalType: "address" }],
+    outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "getTotalAccountCount",
+    inputs: [],
+    outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "getAllAccounts",
+    inputs: [],
+    outputs: [{ name: "", type: "address[]", internalType: "address[]" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "isFactoryAccount",
+    inputs: [{ name: "account", type: "address", internalType: "address" }],
+    outputs: [{ name: "", type: "bool", internalType: "bool" }],
+    stateMutability: "view",
+  },
+  {
+    type: "event",
+    name: "AccountCreated",
+    inputs: [
+      { name: "user", type: "address", indexed: true, internalType: "address" },
+      { name: "account", type: "address", indexed: true, internalType: "address" },
+      { name: "accountIndex", type: "uint256", indexed: false, internalType: "uint256" },
+      { name: "timestamp", type: "uint256", indexed: false, internalType: "uint256" },
+    ],
+    anonymous: false,
+  },
+] as const;
+
+export const infoPilotSmartAccountAbi = [
+  {
+    type: "constructor",
+    inputs: [
+      { name: "_ftsoV2", type: "address", internalType: "address" },
+      { name: "_feedConverter", type: "address", internalType: "address" },
+      { name: "_sentimentOracle", type: "address", internalType: "address" },
+      { name: "_dexRouter", type: "address", internalType: "address" },
+    ],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "fallback",
+    stateMutability: "payable",
+  },
+  {
+    type: "receive",
+    stateMutability: "payable",
+  },
+  {
+    type: "function",
+    name: "owner",
+    inputs: [],
+    outputs: [{ name: "", type: "address", internalType: "address" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "currentRule",
+    inputs: [],
+    outputs: [
+      { name: "priceFeedId", type: "bytes21", internalType: "bytes21" },
+      { name: "assetSymbol", type: "string", internalType: "string" },
+      { name: "priceThreshold", type: "uint256", internalType: "uint256" },
+      { name: "isPriceBelow", type: "bool", internalType: "bool" },
+      { name: "sentimentCondition", type: "int8", internalType: "int8" },
+      { name: "swapPercentage", type: "uint256", internalType: "uint256" },
+      { name: "tokenIn", type: "address", internalType: "address" },
+      { name: "tokenOut", type: "address", internalType: "address" },
+      { name: "active", type: "bool", internalType: "bool" },
+      { name: "createdAt", type: "uint64", internalType: "uint64" },
+    ],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "setRule",
+    inputs: [
+      { name: "_feedName", type: "string", internalType: "string" },
+      { name: "_assetSymbol", type: "string", internalType: "string" },
+      { name: "_priceThreshold", type: "uint256", internalType: "uint256" },
+      { name: "_isPriceBelow", type: "bool", internalType: "bool" },
+      { name: "_sentimentCondition", type: "int8", internalType: "int8" },
+      { name: "_swapPercentage", type: "uint256", internalType: "uint256" },
+      { name: "_tokenIn", type: "address", internalType: "address" },
+      { name: "_tokenOut", type: "address", internalType: "address" },
+    ],
+    outputs: [],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "evaluate",
+    inputs: [],
+    outputs: [{ name: "executed", type: "bool", internalType: "bool" }],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "checkConditions",
+    inputs: [],
+    outputs: [
+      { name: "wouldExecute", type: "bool", internalType: "bool" },
+      { name: "priceConditionMet", type: "bool", internalType: "bool" },
+      { name: "sentimentConditionMet", type: "bool", internalType: "bool" },
+    ],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "getCurrentPrice",
+    inputs: [],
+    outputs: [
+      { name: "price", type: "uint256", internalType: "uint256" },
+      { name: "timestamp", type: "uint64", internalType: "uint64" },
+    ],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "getCurrentSentiment",
+    inputs: [],
+    outputs: [
+      { name: "sentiment", type: "int8", internalType: "int8" },
+      { name: "timestamp", type: "uint64", internalType: "uint64" },
+    ],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "getExecutionCount",
+    inputs: [],
+    outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "executionHistory",
+    inputs: [{ name: "", type: "uint256", internalType: "uint256" }],
+    outputs: [
+      { name: "timestamp", type: "uint256", internalType: "uint256" },
+      { name: "priceAtExecution", type: "uint256", internalType: "uint256" },
+      { name: "sentimentAtExecution", type: "int8", internalType: "int8" },
+      { name: "amountSwapped", type: "uint256", internalType: "uint256" },
+      { name: "tokenIn", type: "address", internalType: "address" },
+      { name: "tokenOut", type: "address", internalType: "address" },
+    ],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "getTokenBalance",
+    inputs: [{ name: "token", type: "address", internalType: "address" }],
+    outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "deactivateRule",
+    inputs: [],
+    outputs: [],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "withdrawToken",
+    inputs: [
+      { name: "token", type: "address", internalType: "address" },
+      { name: "amount", type: "uint256", internalType: "uint256" },
+    ],
+    outputs: [],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "withdrawNative",
+    inputs: [{ name: "amount", type: "uint256", internalType: "uint256" }],
+    outputs: [],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "transferOwnership",
+    inputs: [{ name: "newOwner", type: "address", internalType: "address" }],
+    outputs: [],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "event",
+    name: "RuleCreated",
+    inputs: [
+      { name: "feedId", type: "bytes21", indexed: true, internalType: "bytes21" },
+      { name: "assetSymbol", type: "string", indexed: false, internalType: "string" },
+      { name: "priceThreshold", type: "uint256", indexed: false, internalType: "uint256" },
+      { name: "sentimentCondition", type: "int8", indexed: false, internalType: "int8" },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "RuleEvaluated",
+    inputs: [
+      { name: "priceConditionMet", type: "bool", indexed: false, internalType: "bool" },
+      { name: "sentimentConditionMet", type: "bool", indexed: false, internalType: "bool" },
+      { name: "currentPrice", type: "uint256", indexed: false, internalType: "uint256" },
+      { name: "currentSentiment", type: "int8", indexed: false, internalType: "int8" },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "AutoSwapExecuted",
+    inputs: [
+      { name: "tokenIn", type: "address", indexed: true, internalType: "address" },
+      { name: "tokenOut", type: "address", indexed: true, internalType: "address" },
+      { name: "amountIn", type: "uint256", indexed: false, internalType: "uint256" },
+      { name: "amountOut", type: "uint256", indexed: false, internalType: "uint256" },
+      { name: "timestamp", type: "uint256", indexed: false, internalType: "uint256" },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "RuleDeactivated",
+    inputs: [{ name: "timestamp", type: "uint256", indexed: false, internalType: "uint256" }],
+    anonymous: false,
+  },
+] as const;
+
+export const erc20Abi = [
+  {
+    type: "function",
+    name: "balanceOf",
+    inputs: [{ name: "account", type: "address" }],
+    outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "transfer",
+    inputs: [
+      { name: "to", type: "address" },
+      { name: "amount", type: "uint256" },
+    ],
+    outputs: [{ name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "approve",
+    inputs: [
+      { name: "spender", type: "address" },
+      { name: "amount", type: "uint256" },
+    ],
+    outputs: [{ name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "allowance",
+    inputs: [
+      { name: "owner", type: "address" },
+      { name: "spender", type: "address" },
+    ],
+    outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "symbol",
+    inputs: [],
+    outputs: [{ name: "", type: "string" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "decimals",
+    inputs: [],
+    outputs: [{ name: "", type: "uint8" }],
+    stateMutability: "view",
+  },
+] as const;

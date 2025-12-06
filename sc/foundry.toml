@@ -18,4 +18,6 @@ coston2_alt = "https://coston2-api.flare.network/ext/C/rpc"
 
 # Etherscan (Flarescan) configuration
 [etherscan]
-coston2 = { key = "${FLARESCAN_API_KEY}", url = "https://coston2-explorer.flare.network/api" }
+# coston2 = { key = "${FLARESCAN_API_KEY}", url = "https://api.etherscan.io/v2/api" }
+coston2 = { key = "", url = "https://coston2-explorer.flare.network/api" }
+
